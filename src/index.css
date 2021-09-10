@@ -5,6 +5,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(330deg, #264653, #2a9d8f);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Poppins',
+  sans-serif;
 }
 
 code {
