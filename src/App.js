@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 import TodoItem from './TodoItem';
 
@@ -94,11 +94,7 @@ function App() {
   const id = useRef(3)
   const [value, setValue] = useState('')
   const [filter, setFilter] = useState('all')
-  const filterActions = {
-    all: () => true,
-    completed: todo => todo.isCompleted,
-    incompleted: todo => !todo.isCompleted
-  }
+
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -111,6 +107,13 @@ function App() {
       isCompleted: true
     }
   ])
+
+  const filterTodos = useMemo(() => {
+    return todos.filter(todo => {
+      if (filter === 'all') return true
+      return filter === 'completed' ? todo.isCompleted : !todo.isCompleted
+    })
+  }, [todos, filter])
 
   const handleButtonClick = () => {
     setTodos([
@@ -196,8 +199,7 @@ function App() {
         </ActionWrapper>
         <TodoList className="todo-list">
           <ul className="todo-list-ul">
-            {todos
-              .filter(filterActions[filter])
+            {filterTodos
               .map(todo => {
                 return (
                   <TodoItem
